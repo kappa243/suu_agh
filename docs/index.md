@@ -1,6 +1,6 @@
 # OCM - Open Cluster Management
 
-Authors: [Michał Białożyt](https://github.com/michalbialozyt), [Szymon Idec](https://github.com/kappa243), [Dawid Kopeć](https://github.com/dawkopagh), [Michał Szewc](https://github.com/dawkopagh)
+Authors: [Michał Białożyt](https://github.com/michalbialozyt), [Szymon Idec](https://github.com/kappa243), [Dawid Kopeć](https://github.com/dawkopagh), [Michał Szewc](https://github.com/Michal-Szewc)
 
 Year / Group: **2024 / Group 6**
 
