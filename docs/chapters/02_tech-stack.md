@@ -9,9 +9,9 @@
 ### Architecture
 
 The architecture of OCM is built around a **hub-agent model**, inspired by the original "hub-kubelet" pattern from Kubernetes. This model consists of a hub cluster, which runs the multi-cluster control plane of OCM, and klusterlets, which are the clusters managed by the hub. The hub cluster is a lightweight Kubernetes cluster hosting fundamental controllers and services, while klusterlets, also known as managed or spoke clusters, actively pull the latest prescriptions from the hub cluster and reconcile the physical Kubernetes cluster to the expected state. Klusterlets work independently and autonomously. This leads to a minimal reliance on the hub cluster's availability.
+<div align="center">
 
 ![](https://raw.githubusercontent.com/open-cluster-management-io/OCM/main/assets/ocm-arch.png)
-<div align="center">
 <sub>Architercture visualization from official OCM site.</sub>
 </div>
 
