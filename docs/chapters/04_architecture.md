@@ -2,7 +2,7 @@
 
 ## Solution architecture
 
-<img src="./../_img/fast_diagram.drawio.png" alt="image" width="800" height="auto">
+<img src="./../_img/infra_scheme.drawio.svg" alt="image" width="800" height="auto">
 <div align="center">
 <sub>Architecture of OCM deployment and bookstore service.</sub>
 </div>
