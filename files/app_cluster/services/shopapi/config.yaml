@@ -5,8 +5,9 @@ metadata:
   name: shopapi-cm
 
 data:
-  DB_HOST: bookstore-mysql
-  DB_NAME: bookstore
-  DB_USER: appuser
+  DBHOST: 35.237.198.18 
+  DB_PORT: "3306"                     # Specify the MySQL port (default is 3306)
+  DB_NAME: bookstore                  # Database name
+  DB_USER: appuser    
   RAILS_ENV: production
   RAILS_LOG_TO_STDOUT: "1"
