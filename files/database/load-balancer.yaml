@@ -1,0 +1,12 @@
+# mysql-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookstore-mysql-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: bookstore-mysql
