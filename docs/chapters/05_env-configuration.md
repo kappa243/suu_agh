@@ -1,4 +1,4 @@
-## Running OCM minimal example:
+	## Running OCM minimal example:
 
  Those steps have been conducted on ubuntu 22.04. (#TODO: currently OCM runs locally on host machine, there were attempts to launch minimal example in docker, however issues wih kind (kubernetes in docker) occured due to probably nesting kind inside docker, that should be investigated later on).
 
@@ -41,6 +41,17 @@ export PATH=$PATH:/root/go/bin
 ```
 curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
 ```
+
+- Install OCM clusteradm CLI tool:
+```
+curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
+```
+
+- Create aws, azure and google cloud acocunts, install appropriate CLI's by following these guides:
+
+AWS: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+Azure: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli
+Google Cloud: https://cloud.google.com/sdk/docs/install
 
 For minimal example (joining 2 worker clusters to 1 hub) you can launch this script:
 

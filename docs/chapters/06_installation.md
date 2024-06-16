@@ -1,107 +1,32 @@
-## Running main cluster: 
+##Klastry z aplikacją (AWS + AZURE):
 
- Inside the main cluster the OCM hub, MySQL database server and a load balancer have to be installed. In order to achieve it, a cluster has been configured within the AWS Elastic Kubernetes Service. Then the following yaml files have been prepared to deploy the aforementioned services:
+Aby uruchomić aplikację należy uruchomić deploymenty wszystkich trzech serwisów (webiste, shopapi, shopui), które znajdują się na repozytorium https://github.com/devteds/demo-app-bookstore. Należy zwrócić uwagę na pliki config.yaml oraz secret.yaml stanowiące część konfiguracji shopapi. Ważne, aby ustawić odpowiednią ścieżkę oraz port do połączenia z bazą danych, która znajduje się na innym klastrze (jako DB_HOST ustawiamy adres IP load balancera bazy danych). Aby umożliwić połączenie pomiędzy klastrem zarządzającym oraz klastrami aplikacyjnymi należy stworzyć ingress przy pomocy nginx. W ramach tej konfiguracji trzeba ustawić odpowiednie ścieżki i porty do wszystkich trzech serwisów aplikacji.
 
-- For OCM hub:
-```
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: open-cluster-management
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ocm-controller
-  namespace: open-cluster-management
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ocm-controller
-  template:
-    metadata:
-      labels:
-        app: ocm-controller
-    spec:
-      containers:
-      - name: ocm-controller
-        image: quay.io/open-cluster-management/ocm-controller:release-2.4
-        ports:
-        - containerPort: 443
-```
+# Observability:
+Konfiguracja observability obejmuje uruchomienie Prometheusa na klastrach aplikacyjnych, a także udostępnianie informacji na odpowiednim porcie. Dzięki temu dane będą gromadzone na główym klastrze i pokazywane użytkownikowi.
 
-- For MySQL database:
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mysql
-  namespace: ocm-system
-spec:
-  selector:
-    matchLabels:
-      app: mysql
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: mysql
-    spec:
-      containers:
-      - name: mysql
-        image: mysql:8.0
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: "rootpassword"
-        - name: MYSQL_DATABASE
-          value: "mydatabase"
-        - name: MYSQL_USER
-          value: "myuser"
-        - name: MYSQL_PASSWORD
-          value: "mypassword"
-        ports:
-        - containerPort: 3306
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-  namespace: ocm-system
-spec:
-  selector:
-    app: mysql
-  ports:
-  - port: 3306
-    targetPort: 3306
-```
+## Główny klaster (Google Cloud): 
 
-- For the AWS load balancer:
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: ocm-loadbalancer
-  namespace: open-cluster-management
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 443
-      targetPort: 443
-  selector:
-    app: ocm-controller
-```
+ Inside the main cluster the OCM hub, MySQL database server and a load balancer have to be installed. In order to achieve it, a cluster has been configured within the Google Cloud Kubernetes engine.
+ 
+# MySQL:
+ 
+ 
+Aby uruchomić serwer MySQL należy utworzyć PersistentVolumeClaim (PVC) oraz deployment, który uruchomi serwer MySQL w kontenerze, konfigurując go przy użyciu zmiennych środowiskowych i montując PVC do odpowiedniego katalogu. Kolejnym krokiem jest stworzenie usługi mysql-service, która udostępni serwer MySQL jako LoadBalancer, umożliwiając dostęp do bazy danych.
 
-In order to deploy the services the following commands have been run:
-```
-kubectl create namespace ocm-system
-kubectl apply -f mysql-deployment.yaml
-kubectl apply -f ocm-hub-deployment.yaml
-kubectl apply -f ocm-loadbalancer-service.yaml
-```
+# OCMHUB:
+...
 
+# Observability:
+
+Na głównym klastrze uruchomiona zostaje grafana, która udostępnia dane zarówno z głównego klastra, jak i z klastrów aplikacyjnych poprzez pobranie udostępnianych przez Prometheusa danych. Dzięki takiemu rozwiązaniu użytkownik nie musi obserwować wszystkich klastrów oddzielnie, tylko ma wszystkie dane udostępnione i przeanalizowane w ramach jednego serwisu. 
+
+
+
+
+
+
+Do wywalenia/ przeniesienia:
 ## Observability
 
 ### Prometheus (cluster)
