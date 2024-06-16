@@ -17,7 +17,7 @@ Aby uruchomić serwer MySQL należy utworzyć PersistentVolumeClaim (PVC) oraz d
 ## OCMHUB:
 ...
 
-# Observability:
+## Observability:
 
 Na głównym klastrze uruchomiona zostaje grafana, która udostępnia dane zarówno z głównego klastra, jak i z klastrów aplikacyjnych poprzez pobranie udostępnianych przez Prometheusa danych. Dzięki takiemu rozwiązaniu użytkownik nie musi obserwować wszystkich klastrów oddzielnie, tylko ma wszystkie dane udostępnione i przeanalizowane w ramach jednego serwisu. 
 
