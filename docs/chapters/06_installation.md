@@ -1,20 +1,20 @@
-## Klastry z aplikacją (AWS + AZURE):
+# Klastry z aplikacją (AWS + AZURE):
 
 Aby uruchomić aplikację należy uruchomić deploymenty wszystkich trzech serwisów (webiste, shopapi, shopui), które znajdują się na repozytorium https://github.com/devteds/demo-app-bookstore. Należy zwrócić uwagę na pliki config.yaml oraz secret.yaml stanowiące część konfiguracji shopapi. Ważne, aby ustawić odpowiednią ścieżkę oraz port do połączenia z bazą danych, która znajduje się na innym klastrze (jako DB_HOST ustawiamy adres IP load balancera bazy danych). Aby umożliwić połączenie pomiędzy klastrem zarządzającym oraz klastrami aplikacyjnymi należy stworzyć ingress przy pomocy nginx. W ramach tej konfiguracji trzeba ustawić odpowiednie ścieżki i porty do wszystkich trzech serwisów aplikacji.
 
-# Observability:
+## Observability:
 Konfiguracja observability obejmuje uruchomienie Prometheusa na klastrach aplikacyjnych, a także udostępnianie informacji na odpowiednim porcie. Dzięki temu dane będą gromadzone na główym klastrze i pokazywane użytkownikowi.
 
-## Główny klaster (Google Cloud): 
+# Główny klaster (Google Cloud): 
 
  Inside the main cluster the OCM hub, MySQL database server and a load balancer have to be installed. In order to achieve it, a cluster has been configured within the Google Cloud Kubernetes engine.
  
-# MySQL:
+## MySQL:
  
  
 Aby uruchomić serwer MySQL należy utworzyć PersistentVolumeClaim (PVC) oraz deployment, który uruchomi serwer MySQL w kontenerze, konfigurując go przy użyciu zmiennych środowiskowych i montując PVC do odpowiedniego katalogu. Kolejnym krokiem jest stworzenie usługi mysql-service, która udostępni serwer MySQL jako LoadBalancer, umożliwiając dostęp do bazy danych.
 
-# OCMHUB:
+## OCMHUB:
 ...
 
 # Observability:
