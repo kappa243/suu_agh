@@ -1,4 +1,4 @@
-##Klastry z aplikacją (AWS + AZURE):
+## Klastry z aplikacją (AWS + AZURE):
 
 Aby uruchomić aplikację należy uruchomić deploymenty wszystkich trzech serwisów (webiste, shopapi, shopui), które znajdują się na repozytorium https://github.com/devteds/demo-app-bookstore. Należy zwrócić uwagę na pliki config.yaml oraz secret.yaml stanowiące część konfiguracji shopapi. Ważne, aby ustawić odpowiednią ścieżkę oraz port do połączenia z bazą danych, która znajduje się na innym klastrze (jako DB_HOST ustawiamy adres IP load balancera bazy danych). Aby umożliwić połączenie pomiędzy klastrem zarządzającym oraz klastrami aplikacyjnymi należy stworzyć ingress przy pomocy nginx. W ramach tej konfiguracji trzeba ustawić odpowiednie ścieżki i porty do wszystkich trzech serwisów aplikacji.
 

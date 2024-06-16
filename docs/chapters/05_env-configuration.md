@@ -50,7 +50,9 @@ curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/
 - Create aws, azure and google cloud acocunts, install appropriate CLI's by following these guides:
 
 AWS: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-Azure: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli
+
+Azure: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli 
+
 Google Cloud: https://cloud.google.com/sdk/docs/install
 
 For minimal example (joining 2 worker clusters to 1 hub) you can launch this script:
