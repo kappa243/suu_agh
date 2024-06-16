@@ -1,32 +1,22 @@
-# Klastry z aplikacją (AWS + AZURE):
-
-Aby uruchomić aplikację należy uruchomić deploymenty wszystkich trzech serwisów (webiste, shopapi, shopui), które znajdują się na repozytorium https://github.com/devteds/demo-app-bookstore. Należy zwrócić uwagę na pliki config.yaml oraz secret.yaml stanowiące część konfiguracji shopapi. Ważne, aby ustawić odpowiednią ścieżkę oraz port do połączenia z bazą danych, która znajduje się na innym klastrze (jako DB_HOST ustawiamy adres IP load balancera bazy danych). Aby umożliwić połączenie pomiędzy klastrem zarządzającym oraz klastrami aplikacyjnymi należy stworzyć ingress przy pomocy nginx. W ramach tej konfiguracji trzeba ustawić odpowiednie ścieżki i porty do wszystkich trzech serwisów aplikacji.
+# Clusters with the Application (AWS + Azure):
+To deploy the application, you need to deploy all three services (website, shopapi, shopui) available in the repository https://github.com/devteds/demo-app-bookstore. Pay close attention to the config.yaml and secret.yaml files, which are part of the shopapi configuration. It is important to set the correct path and port for the database connection, which is located on another cluster (set the DB_HOST to the IP address of the database load balancer). To enable communication between the management cluster and the application clusters, create an ingress using Nginx. This configuration requires setting appropriate paths and ports for all three application services.
 
 ## Observability:
-Konfiguracja observability obejmuje uruchomienie Prometheusa na klastrach aplikacyjnych, a także udostępnianie informacji na odpowiednim porcie. Dzięki temu dane będą gromadzone na główym klastrze i pokazywane użytkownikowi.
+The observability configuration includes running Prometheus on the application clusters and exposing information on the appropriate port. This allows data to be collected on the main cluster and displayed to the user.
 
-# Główny klaster (Google Cloud): 
+# Main Cluster (Google Cloud):
+Inside the main cluster, the OCM hub, MySQL database server, and a load balancer need to be installed. To achieve this, a cluster has been configured within the Google Cloud Kubernetes engine.
 
- Inside the main cluster the OCM hub, MySQL database server and a load balancer have to be installed. In order to achieve it, a cluster has been configured within the Google Cloud Kubernetes engine.
- 
 ## MySQL:
- 
- 
-Aby uruchomić serwer MySQL należy utworzyć PersistentVolumeClaim (PVC) oraz deployment, który uruchomi serwer MySQL w kontenerze, konfigurując go przy użyciu zmiennych środowiskowych i montując PVC do odpowiedniego katalogu. Kolejnym krokiem jest stworzenie usługi mysql-service, która udostępni serwer MySQL jako LoadBalancer, umożliwiając dostęp do bazy danych.
+To deploy the MySQL server, create a PersistentVolumeClaim (PVC) and a deployment that will run the MySQL server in a container, configuring it using environment variables and mounting the PVC to the appropriate directory. The next step is to create a mysql-service that will expose the MySQL server as a LoadBalancer, enabling access to the database.
 
 ## OCMHUB:
 ...
 
 ## Observability:
-
-Na głównym klastrze uruchomiona zostaje grafana, która udostępnia dane zarówno z głównego klastra, jak i z klastrów aplikacyjnych poprzez pobranie udostępnianych przez Prometheusa danych. Dzięki takiemu rozwiązaniu użytkownik nie musi obserwować wszystkich klastrów oddzielnie, tylko ma wszystkie dane udostępnione i przeanalizowane w ramach jednego serwisu. 
-
+Grafana is deployed on the main cluster, providing data from both the main cluster and the application clusters by retrieving data exposed by Prometheus. This setup allows users to monitor all clusters in one place, with all data presented and analyzed in a single service.
 
 
-
-
-
-Do wywalenia/ przeniesienia:
 ## Observability
 
 ### Prometheus (cluster)
