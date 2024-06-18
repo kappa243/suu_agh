@@ -53,8 +53,13 @@ kubectl apply -f database/mysql.yaml
 kubectl apply -f database/mysql_job.yaml
 ```
 
-## OCMHUB:
-...
+## OCM Hub:
+At first shell script with automated hub creation and klusterlets joining has been created and run on the google cloud environment 
+```
+chmod +x files/initialize_ocm.sh
+./files/initialize_ocm.sh
+```
+In the next step appropriate yaml files have been created to enable control over the clusterlets behaviour from the hub.
 
 ## Observability:
 Grafana is deployed on the main cluster, providing data from both the main cluster and the application clusters by retrieving data exposed by Prometheus. This setup allows users to monitor all clusters in one place, with all data presented and analyzed in a single service.

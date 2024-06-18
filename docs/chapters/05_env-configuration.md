@@ -1,6 +1,6 @@
-	## Running OCM minimal example:
+## Running OCM minimal example:
 
- Those steps have been conducted on ubuntu 22.04. (#TODO: currently OCM runs locally on host machine, there were attempts to launch minimal example in docker, however issues wih kind (kubernetes in docker) occured due to probably nesting kind inside docker, that should be investigated later on).
+ Those steps have been conducted on ubuntu 22.04.
 
 - Ensure docker is installed:  
 ```
@@ -36,10 +36,6 @@ kubectl version --client
 ```
 go install sigs.k8s.io/kind@v0.22.0
 export PATH=$PATH:/root/go/bin
-```
-- Install OCM clusteradm CLI tool:
-```
-curl -L https://raw.githubusercontent.com/open-cluster-management-io/clusteradm/main/install.sh | bash
 ```
 
 - Install OCM clusteradm CLI tool:
