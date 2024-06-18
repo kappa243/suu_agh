@@ -1,0 +1,13 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: app-cluster-subscription
+  namespace: open-cluster-management
+spec:
+  channel: open-cluster-management/bookstore-channel
+  path: "app_cluster"  # Targeting the parent directory to include all subdirectories
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: all-clusters
+  installPlanApproval: Automatic

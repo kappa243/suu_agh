@@ -1,0 +1,7 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: all-clusters
+  namespace: open-cluster-management
+spec:
+  clusterSelector: {} # target all managed clusters
