@@ -32,8 +32,8 @@ metadata:
 data:
   default.conf: |
     upstream backend {
-        server 34.68.52.49;
-        server 34.45.165.187;
+        server 48.217.207.73;
+        server 54.210.14.18;
     }
 
     server {

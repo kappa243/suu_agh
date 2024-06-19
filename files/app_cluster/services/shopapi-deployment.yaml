@@ -90,6 +90,7 @@ metadata:
 
 data:
   DB_HOST: 34.41.209.216
+  DB_PORT: 3306
   DB_NAME: bookstore
   DB_USER: appuser
   RAILS_ENV: production
