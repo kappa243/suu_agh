@@ -89,7 +89,7 @@ metadata:
   name: shopapi-cm
 
 data:
-  DB_HOST: 34.67.85.123
+  DB_HOST: 34.41.209.216
   DB_NAME: bookstore
   DB_USER: appuser
   RAILS_ENV: production
