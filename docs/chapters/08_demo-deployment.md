@@ -4,18 +4,30 @@ In this section, the infrastructure of the application has been tested and impac
 
 ## Traffic simulation
 
-Locust library has been used to simulate traffic in the network. We used previosly desribed observability setup to check if the load balancer works correctly and to analyse how the application works in standard flow. Here is a python script used to generate requests: 
+Requests library has been used to simulate traffic in the network. We used previosly desribed observability setup to check if the load balancer works correctly and to analyse how the application works in standard flow. Here is a python script used to generate requests: 
 
 ```
-from locust import HttpUser, task, between
+import requests
 
-class QuickstartUser(HttpUser):
-    wait_time = between(1, 2.5)
+def get_data_from_api(url):
+    response = requests.get(url)
 
-    @task
-    def hello_world(self):
-        self.client.get("34.70.163.223/")
-        self.client.get("34.70.163.223/shop")
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    else:
+        print(f"Failed to retrieve data: {response.status_code}")
+        return None
+
+api_url = "http://34.42.212.39/api/books"
+
+data = get_data_from_api(api_url)
+
+if data:
+    print("Data retrieved successfully:")
+    print(data)
+else:
+    print("No data retrieved.")
 ```
 
 We used grafana to analyze the dashboards and metrics coming from the clusters and to verfify that the load balancer works correctly.
