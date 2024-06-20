@@ -1,0 +1,162 @@
+apiVersion: work.open-cluster-management.io/v1
+kind: ManifestWork
+metadata:
+  namespace: aws-context
+  name: app-cluster
+spec:
+  workload:
+    manifests:
+      - apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: website
+          namespace: default
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: website
+          template:
+            metadata:
+              labels:
+                app: website
+            spec:
+              containers:
+              - name: website
+                image: devteds/demo-bookstore-website:1.0
+                imagePullPolicy: Always
+                ports:
+                - containerPort: 80
+      - apiVersion: v1
+        kind: Service
+        metadata:
+          name: website-service
+          namespace: default
+        spec:
+          ports:
+          - port: 80
+          selector:
+            app: website
+      - apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: shopui
+          namespace: default
+        spec:
+          selector:
+            matchLabels:
+              app: shopui
+          replicas: 1
+          template:
+            metadata:
+              labels:
+                app: shopui
+                image_change: ''
+            spec:
+              containers:
+              - name: shopui
+                image: devteds/demo-bookstore-shopui:1.0
+                imagePullPolicy: Always
+                ports:
+                - containerPort: 80
+      - apiVersion: v1
+        kind: Service
+        metadata:
+          name: shopui-service
+          namespace: default
+        spec:
+          ports:
+          - port: 80
+          selector:
+            app: shopui
+      - apiVersion: v1
+        kind: Secret
+        metadata:
+          name: shopapi-sec
+          namespace: default
+        type: Opaque
+        data:
+          DB_PASSWORD: "YXBwdXNlcjEyMwo="
+      - apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: shopapi
+          namespace: default
+        spec:
+          selector:
+            matchLabels:
+              app: shopapi
+          replicas: 1
+          template:
+            metadata:
+              labels:
+                app: shopapi
+            spec:
+              containers:
+              - name: shopapi
+                image: devteds/demo-bookstore-shopapi:1.0
+                imagePullPolicy: Always
+                ports:
+                - containerPort: 3000
+                volumeMounts:
+                - name: secret-vol
+                  mountPath: /app/config/app_secret        
+                envFrom:
+                - configMapRef:
+                    name: shopapi-cm
+              volumes:
+                - name: secret-vol
+                  secret:
+                    secretName: shopapi-sec
+      - apiVersion: v1
+        kind: Service
+        metadata:
+          name: shopapi-service
+          namespace: default
+        spec:
+          ports:
+          - port: 3000
+          selector:
+            app: shopapi
+      - apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: shopapi-cm
+          namespace: default
+        data:
+          DB_HOST: 35.202.139.166
+          DB_NAME: bookstore
+          DB_USER: appuser
+          RAILS_ENV: production
+          RAILS_LOG_TO_STDOUT: "1"
+      - apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        metadata:
+          name: nginx-ingress
+          namespace: default
+        spec:
+          ingressClassName: nginx
+          rules:
+          - http:
+              paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: website-service
+                    port:
+                      number: 80
+              - path: /api/books
+                pathType: Prefix
+                backend:
+                  service:
+                    name: shopapi-service
+                    port:
+                      number: 3000
+              - path: /shop
+                pathType: Prefix
+                backend:
+                  service:
+                    name: shopui-service
+                    port:
+                      number: 80
