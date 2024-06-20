@@ -22,9 +22,34 @@ After successful execution, the managed clusters can be displayed.
 
 <img src="./../_img/clusters.png" alt="image" width="800" height="auto">
 
-## Manifestwork
+## Placement and ManifestWork as key OCM features
 
-At last we applied the manifestwork onto the hub cluster to check if the application will be deployed on the application clusters. After shutting down the application manually on aws cluster and applying the ocm_appcluster.yaml file, all services have been successfully deployed. 
+### Placement
+
+Placement in Open Cluster Management refers to the mechanism that determines where (which clusters) a specific resource or workload should be deployed. It defines the criteria and rules for selecting clusters from a pool of available clusters.
+
+Key components of Placement:
+
+- Placement Rule: A custom resource that defines the rules and constraints for selecting clusters. This could include criteria like cluster labels, cluster status, or other metadata.
+- Placement Decision: The outcome of evaluating the placement rule, resulting in a list of clusters that match the criteria.
+
+
+### ManifestWork
+
+ManifestWork is a custom resource used to define and distribute Kubernetes resources to the selected clusters. It is essentially a package of Kubernetes manifests that need to be applied to the target clusters identified by the Placement process.
+
+Key components of ManifestWork:
+
+- Spec: Defines the set of Kubernetes manifests that need to be deployed. These could include ConfigMaps, Deployments, Services, etc.
+- Status: Provides information about the deployment status of these manifests across the target clusters.
+
+### How Do They Work Together
+- Define a Placement Rule: Create a PlacementRule resource that specifies the criteria for selecting target clusters. This rule can consider various cluster attributes and statuses.
+- Generate a Placement Decision: The Placement controller evaluates the PlacementRule and generates a PlacementDecision, listing the clusters that match the criteria.
+- Create a ManifestWork: Define a ManifestWork resource that includes the Kubernetes manifests you want to deploy.
+- Apply to Target Clusters: The ManifestWork resource is associated with the clusters identified in the PlacementDecision, and the specified manifests are deployed to those clusters.
+
+At last we applied a manifestwork file onto the hub cluster to check if the application will be deployed on the application clusters. After shutting down the application manually on aws cluster and applying the ocm_appcluster.yaml file, all services have been successfully deployed. 
 
 ## Observability
 
