@@ -14,7 +14,7 @@ Here is the main cluster, that hosts database and loadbalancer. It serves as an 
 
 ## Setting up OCM
 
-After creating clusters it is time to set up OCM.  The script "initialize_ocm.sh" will initialize hub cluster and join klusterlets that are passed as the script's arguments. Here is the output after a succesful execution.
+After creating clusters it is time to set up OCM. Make sure that you have at least 2 clusters available (of which one will be hub cluster and second will be klusterlet). Fetch kubeconfigs of desired clusters. The script "initialize_ocm.sh" will initialize hub cluster and join klusterlets that are passed as the script's arguments. You can use --help argument to get information on how arguments should be passed to the script. Here is the output after a succesful execution.
 
 <img src="./../_img/ocm_init.png" alt="image" width="800" height="auto">
 
@@ -60,3 +60,16 @@ After deploying Prometheus and Grafana on the cluster we were able to observe ho
 <img src="./../_img/grafana2.png" alt="image" width="800" height="auto">
 
 <img src="./../_img/grafana3.png" alt="image" width="800" height="auto">
+
+## Multi-cluster deployment feature
+
+Multicloud Operators Subscription project enables efficient management and deployment of applications across multiple Kubernetes clusters from a central hub cluster.
+
+Subscriptions can point to a channel for identifying new or updated resource templates. The subscription operator can then download directly from the storage location and deploy to targeted managed clusters without checking the hub cluster first. With a subscription, the subscription operator can monitor the channel for new or updated resources instead of the hub cluster.
+
+* Operational Flow
+    + Subscription Creation: Administrators define subscriptions on the hub cluster, pointing to various channels (such as Git repositories or Helm release registries).
+
+    + Monitoring and Deployment: The subscription operator monitors these channels for new or updated resource templates. Upon detecting changes, it deploys the resources directly to the targeted managed clusters without rechecking with the hub cluster.
+
+    + Application Deployment Across Clusters: Subscribed applications are automatically deployed across the selected managed clusters, simplifying the management of multi-cluster environments.
